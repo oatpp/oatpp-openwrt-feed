@@ -1,0 +1,15 @@
+--- a/CMakeLists.txt	2020-01-24 13:51:57.905347801 +0100
++++ b/CMakeLists.txt	2020-01-24 13:52:37.726187924 +0100
+@@ -41,8 +41,10 @@
+     get_target_property(OATPP_INCLUDE oatpp::oatpp INTERFACE_INCLUDE_DIRECTORIES)
+     message("OATPP_INCLUDE=${OATPP_INCLUDE}")
+ 
+-    get_target_property(OATPP_TEST_INCLUDE oatpp::oatpp-test INTERFACE_INCLUDE_DIRECTORIES)
+-    message("OATPP_TEST_INCLUDE=${OATPP_TEST_INCLUDE}")
++    if(OATPP_BUILD_TESTS)
++        get_target_property(OATPP_TEST_INCLUDE oatpp::oatpp-test INTERFACE_INCLUDE_DIRECTORIES)
++        message("OATPP_TEST_INCLUDE=${OATPP_TEST_INCLUDE}")
++    endif()
+ 
+ elseif(OATPP_MODULES_LOCATION STREQUAL OATPP_MODULES_LOCATION_EXTERNAL)
+ 

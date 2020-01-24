@@ -1,0 +1,26 @@
+menu "Build/Install Configuration"
+	depends on PACKAGE_oatpp
+
+	choice OATPP_BUILD_TYPE
+		depends on PACKAGE_oatpp
+		prompt "Build Static or Shared"
+		default OATPP_BUILD_TYPE_STATIC
+
+		config OATPP_BUILD_TYPE_STATIC
+			bool "Static"
+
+		config OATPP_BUILD_TYPE_SHARED
+			bool "Shared"
+
+	endchoice
+
+	config OATPP_INSTALL_TEST_LIB
+		bool "Install Oat++ test library"
+		default n
+
+	config OATPP_INSTALL_TEST_BIN
+		bool "Install Oat++ test binary"
+		depends on OATPP_INSTALL_TEST_LIB
+		default n
+
+endmenu

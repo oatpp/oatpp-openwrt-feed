@@ -1,0 +1,44 @@
+--- a/cmake/module-utils.cmake	2020-01-24 14:12:38.591605051 +0100
++++ b/cmake/module-utils.cmake	2020-01-24 14:12:31.803461175 +0100
+@@ -4,10 +4,16 @@
+ 
+         message("target_link_oatpp(${target}) to installed oatpp lib")
+ 
+-        target_link_libraries(${target}
+-                PRIVATE oatpp::oatpp
+-                PRIVATE oatpp::oatpp-test
+-        )
++        if(OATPP_BUILD_TESTS)
++            target_link_libraries(${target}
++                    PRIVATE oatpp::oatpp
++                    PRIVATE oatpp::oatpp-test
++            )
++        else()
++            target_link_libraries(${target}
++                    PRIVATE oatpp::oatpp
++            )
++        endif()
+ 
+     else()
+ 
+@@ -15,10 +21,16 @@
+ 
+         target_include_directories(${target} PUBLIC $<BUILD_INTERFACE:${OATPP_DIR_SRC}>)
+         #target_link_directories(${target} PRIVATE ${OATPP_DIR_LIB})
+-        target_link_libraries(${target}
+-                PRIVATE oatpp
+-                PRIVATE oatpp-test
+-        )
++        if(OATPP_BUILD_TESTS)
++            target_link_libraries(${target}
++                    PRIVATE oatpp
++                    PRIVATE oatpp-test
++            )
++        else()
++            target_link_libraries(${target}
++                    PRIVATE oatpp
++            )
++        endif()
+ 
+     endif()
+ 

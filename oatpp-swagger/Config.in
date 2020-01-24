@@ -1,0 +1,15 @@
+menu "Build/Install Configuration"
+	depends PACKAGE_oatpp-swagger
+
+	config OATPP_SWAGGER_INSTALL_UI
+		bool "Install Swagger UI"
+		depends on PACKAGE_oatpp-swagger
+		default y
+
+	config OATPP_SWAGGER_INSTALL_TEST_BIN
+		bool "Install Oat++-swagger test binary"
+		depends on PACKAGE_oatpp-swagger
+		depends on OATPP_INSTALL_TEST_LIB
+		default n
+
+endmenu
