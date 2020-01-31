@@ -24,13 +24,13 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=oatpp-swagger
-PKG_VERSION:=0.19.12
-PKG_RELEASE=6
+PKG_VERSION:=1.0.0
+PKG_RELEASE=7
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/oatpp/oatpp-swagger.git
-PKG_SOURCE_VERSION:=3faaf21e00d0a8e9c438a0a4673ebaae4357f2a8
+PKG_SOURCE_VERSION:=136f09aae1182b0c9172b6d621bca726d6d4e7e2
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_LICENSE:=APACHE-2.0
@@ -78,11 +78,11 @@ define Package/oatpp-swagger/install
 	$(INSTALL_DIR) $(1)/usr/lib/oatpp-$(PKG_VERSION)/
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/lib/oatpp-$(PKG_VERSION)/liboatpp-swagger.$(OATPP_BUILD_TYPE) $(1)/usr/lib/oatpp-$(PKG_VERSION)/
 
-    $(if $(OATPP_SWAGGER_INSTALL_TEST_BIN),$(INSTALL_DIR) $(1)/usr/bin,)
-	$(if $(OATPP_SWAGGER_INSTALL_TEST_BIN),$(INSTALL_BIN) $(PKG_BUILD_DIR)/test/module-tests $(1)/usr/bin/oatppSwaggerTest,)
+    $(if $(CONFIG_OATPP_SWAGGER_INSTALL_TEST_BIN),$(INSTALL_DIR) $(1)/usr/bin,)
+	$(if $(CONFIG_OATPP_SWAGGER_INSTALL_TEST_BIN),$(INSTALL_BIN) $(PKG_BUILD_DIR)/test/module-tests $(1)/usr/bin/oatppSwaggerTest,)
 
-	$(if $(OATPP_SWAGGER_INSTALL_UI),$(INSTALL_DIR) $(1)/usr/shared/oatpp-$(PKG_VERSION)/res,)
-	$(if $(OATPP_SWAGGER_INSTALL_UI),$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/include/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res/* $(1)/usr/shared/oatpp-$(PKG_VERSION)/res,)
+	$(if $(CONFIG_OATPP_SWAGGER_INSTALL_UI),$(INSTALL_DIR) $(1)/usr/share/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res,)
+	$(if $(CONFIG_OATPP_SWAGGER_INSTALL_UI),$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/include/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res/* $(1)/usr/share/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res,)
 endef
 
 $(eval $(call BuildPackage,oatpp-swagger))
