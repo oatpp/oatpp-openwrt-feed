@@ -31,6 +31,49 @@ echo "src-git oatpp https://github.com/oatpp/oatpp-openwrt-feed.git" >> ./feeds.
 
 Oat++ libraries and options are located in `Libraries/Oat++`.
 
+### Note on Oat++-LibreSSL
+We do not bundle a working LibreSSL recipe/makefile for OpenWRT. You have to create you own to fit your needs.
+OpenWRT only ships OpenSSL-1.1 which is not compatible with LibreSSL.
+
+## Configurations
+
+Oat++-OpenWRT behaves differently on OpenWRT then it's non-embedded version.
+Libraries are build as shared objects instead of static libraries, the test-lib is not installed and libraries are symlinked to `/usr/lib`.
+
+### Main-Module
+
+#### OATPP_BUILD_TYPE
+Build Oat++ libraries and moduels as static or shared libraries. (Default: Shared)
+
+#### OATPP_VERSIONIZE
+By default, Oat++ is installed to `/usr/lib/oatpp.so`
+To match the desktop-behaviour Oat++ can be installed to `/usr/lib/oatpp-<version>/oatpp.so` with this switch 
+
+#### OATPP_INSTALL_TEST_LIB
+Install the Oat++ testing library. (default: no)
+
+#### OATPP_INSTALL_TEST_BIN
+Install the Oat++ testing binary. (default: no, depends on `OATPP_INSTALL_TEST_LIB`)
+
+### LibreSSL
+
+#### OATPP_LIBRESSL_INSTALL_TEST_BIN
+Install the Oat++-LibreSSL testing binary. (default: no, depends on `OATPP_INSTALL_TEST_LIB`)
+
+### Swagger
+
+#### OATPP_SWAGGER_INSTALL_UI
+Install the Swagger-UI resources to `/usr/share/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res`
+(default: y, why would you install swagger if not?)
+
+#### OATPP_SWAGGER_INSTALL_TEST_BIN
+Install the Oat++-Swagger testing binary. (default: no, depends on `OATPP_INSTALL_TEST_LIB`)
+
+### Websocket
+
+#### OATPP_SWAGGER_INSTALL_TEST_BIN
+Install the Oat++-Websocket testing binary. (default: no, depends on `OATPP_INSTALL_TEST_LIB`)
+
 ## License
 
 See [LICENSE](LICENSE) file.

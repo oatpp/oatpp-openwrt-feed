@@ -1,0 +1,10 @@
+menu "Build/Install Configuration"
+	depends on PACKAGE_oatpp-libressl
+
+config OATPP_LIBRESSL_INSTALL_TEST_BIN
+	bool "Install Oat++-LibreSSL test binary"
+	depends on PACKAGE_oatpp-libressl
+	depends on OATPP_INSTALL_TEST_LIB
+	default n
+
+endmenu

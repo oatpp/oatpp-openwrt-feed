@@ -45,6 +45,7 @@ define Package/oatpp-swagger/Default
 	SUBMENU:=Oat++
 	URL:=https://oatpp.io
 	ABI_VERSION:=$(PKG_VERSION)
+	MENU:=1
 endef
 
 define Package/oatpp-swagger
@@ -68,21 +69,21 @@ CMAKE_OPTIONS= \
 
 OATPP_BUILD_TYPE=$(if $(CONFIG_OATPP_BUILD_TYPE_SHARED),so,a)
 
-define Package/InstallDev
-	$(INSTALL_DIR) $(1)/usr/include/oatpp-$(PKG_VERSION)/oatpp-swagger $(1)/usr/lib/cmake
-	$(CP) $(PKG_INSTALL_DIR)/usr/include/oatpp-$(PKG_VERSION)/oatpp/oatpp-swagger $(1)/usr/include/oatpp-$(PKG_VERSION)/oatpp/oatpp-swagger
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/oatpp-swagger-$(PKG_VERSION) $(1)/usr/lib/cmake/oatpp-swagger-$(PKG_VERSION)
-endef
 
 define Package/oatpp-swagger/install
 	$(INSTALL_DIR) $(1)/usr/lib/oatpp-$(PKG_VERSION)/
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/lib/oatpp-$(PKG_VERSION)/liboatpp-swagger.$(OATPP_BUILD_TYPE) $(1)/usr/lib/oatpp-$(PKG_VERSION)/
+	$(if $(CONFIG_OATPP_SYMLINK_LIB),$(LN) oatpp-$(PKG_VERSION)/liboatpp-swagger.$(OATPP_BUILD_TYPE) $(1)/usr/lib/liboatpp-swagger.$(OATPP_BUILD_TYPE).$(PKG_VERSION))
 
     $(if $(CONFIG_OATPP_SWAGGER_INSTALL_TEST_BIN),$(INSTALL_DIR) $(1)/usr/bin,)
 	$(if $(CONFIG_OATPP_SWAGGER_INSTALL_TEST_BIN),$(INSTALL_BIN) $(PKG_BUILD_DIR)/test/module-tests $(1)/usr/bin/oatppSwaggerTest,)
 
 	$(if $(CONFIG_OATPP_SWAGGER_INSTALL_UI),$(INSTALL_DIR) $(1)/usr/share/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res,)
-	$(if $(CONFIG_OATPP_SWAGGER_INSTALL_UI),$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/include/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res/* $(1)/usr/share/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res,)
+
+	$(if $(CONFIG_OATPP_SWAGGER_INSTALL_UI),$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/include/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res/*.png $(1)/usr/share/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res)
+	$(if $(CONFIG_OATPP_SWAGGER_INSTALL_UI),$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/include/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res/*.html $(1)/usr/share/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res)
+	$(if $(CONFIG_OATPP_SWAGGER_INSTALL_UI),$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/include/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res/*.js $(1)/usr/share/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res)
+	$(if $(CONFIG_OATPP_SWAGGER_INSTALL_UI),$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/include/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res/*.css $(1)/usr/share/oatpp-$(PKG_VERSION)/bin/oatpp-swagger/res)
 endef
 
 $(eval $(call BuildPackage,oatpp-swagger))

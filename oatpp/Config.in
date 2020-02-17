@@ -14,6 +14,13 @@ menu "Build/Install Configuration"
 
 	endchoice
 
+	config OATPP_SYMLINK_LIB
+		bool "Symlink Oat++-Libs to /usr/lib"
+		default y
+		help
+		  Oat++ is installed to /usr/lib/oatpp-<version>/oatpp.so
+		  Say yes here to symlink /usr/lib/oatpp.so.<verion> to /usr/lib/oatpp-<version>/oatpp.so
+
 	config OATPP_INSTALL_TEST_LIB
 		bool "Install Oat++ test library"
 		default n

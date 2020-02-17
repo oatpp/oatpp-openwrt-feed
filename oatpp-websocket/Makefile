@@ -25,12 +25,12 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=oatpp-websocket
 PKG_VERSION:=1.0.0
-PKG_RELEASE=5
+PKG_RELEASE=6
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/oatpp/oatpp-websocket.git
-PKG_SOURCE_VERSION:=d047321db5ca9194b0035eea481623983a59c82c
+PKG_SOURCE_VERSION:=6d77c89a7d7eab556b33882765cb85692c768986
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_LICENSE:=APACHE-2.0
@@ -39,15 +39,13 @@ CMAKE_INSTALL:=1
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
-CMAKE_OPTIONS= \
-	-DOATPP_DISABLE_POOL_ALLOCATIONS=ON
-
 define Package/oatpp-websocket/Default
 	SECTION:=oatpp
 	CATEGORY:=Libraries
 	SUBMENU:=Oat++
 	URL:=https://oatpp.io
 	ABI_VERSION:=$(PKG_VERSION)
+	MENU:=1
 endef
 
 define Package/oatpp-websocket
@@ -66,24 +64,19 @@ define Package/oatpp-websocket/config
 endef
 
 CMAKE_OPTIONS= \
-	-DOATPP_DISABLE_POOL_ALLOCATIONS=ON \
 	-DBUILD_SHARED_LIBS=$(if $(CONFIG_OATPP_BUILD_TYPE_SHARED),ON,OFF) \
 	-DOATPP_BUILD_TESTS=$(if $(CONFIG_OATPP_WEBSOCKET_INSTALL_TEST_BIN),ON,OFF)
 
 OATPP_BUILD_TYPE=$(if $(CONFIG_OATPP_BUILD_TYPE_SHARED),so,a)
 
-define Package/InstallDev
-	$(INSTALL_DIR) $(1)/usr/include/oatpp-$(PKG_VERSION)/oatpp-websocket $(1)/usr/lib/cmake
-	$(CP) $(PKG_INSTALL_DIR)/usr/include/oatpp-$(PKG_VERSION)/oatpp/oatpp-websocket $(1)/usr/include/oatpp-$(PKG_VERSION)/oatpp/oatpp-websocket
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/oatpp-websocket-$(PKG_VERSION) $(1)/usr/lib/cmake/oatpp-websocket-$(PKG_VERSION)
-endef
 
 define Package/oatpp-websocket/install
 	$(INSTALL_DIR) $(1)/usr/lib/oatpp-$(PKG_VERSION)/
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/lib/oatpp-$(PKG_VERSION)/liboatpp-websocket.$(OATPP_BUILD_TYPE) $(1)/usr/lib/oatpp-$(PKG_VERSION)/
+	$(if $(CONFIG_OATPP_SYMLINK_LIB),$(LN) oatpp-$(PKG_VERSION)/liboatpp-websocket.$(OATPP_BUILD_TYPE) $(1)/usr/lib/liboatpp-websocket.$(OATPP_BUILD_TYPE).$(PKG_VERSION))
 
-	$(if $(CONFIG_OATPP_WEBSOCKET_INSTALL_TEST_BIN),$(INSTALL_DIR) $(1)/usr/bin,)
-	$(if $(CONFIG_OATPP_WEBSOCKET_INSTALL_TEST_BIN),$(INSTALL_BIN) $(PKG_BUILD_DIR)/test/module-tests $(1)/usr/bin/oatppWebsocketTest,)
+	$(if $(CONFIG_OATPP_WEBSOCKET_INSTALL_TEST_BIN),$(INSTALL_DIR) $(1)/usr/bin)
+	$(if $(CONFIG_OATPP_WEBSOCKET_INSTALL_TEST_BIN),$(INSTALL_BIN) $(PKG_BUILD_DIR)/test/module-tests $(1)/usr/bin/oatppWebsocketTest)
 endef
 
 $(eval $(call BuildPackage,oatpp-websocket))
