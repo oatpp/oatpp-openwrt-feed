@@ -77,10 +77,12 @@ define Package/oatpp/install
 	$(INSTALL_DIR) $(1)/usr/lib/oatpp-$(PKG_VERSION)
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/lib/oatpp-$(PKG_VERSION)/liboatpp.$(OATPP_BUILD_TYPE) $(1)/usr/lib/oatpp-$(PKG_VERSION)/liboatpp.$(OATPP_BUILD_TYPE)
 	$(if $(CONFIG_OATPP_SYMLINK_LIB),$(LN) oatpp-$(PKG_VERSION)/liboatpp.$(OATPP_BUILD_TYPE) $(1)/usr/lib/liboatpp.$(OATPP_BUILD_TYPE).$(PKG_VERSION))
+	$(if $(CONFIG_OATPP_SYMLINK_LIB),$(LN) oatpp-$(PKG_VERSION)/liboatpp.$(OATPP_BUILD_TYPE) $(1)/usr/lib/liboatpp.$(OATPP_BUILD_TYPE))
 	
 	$(if $(CONFIG_OATPP_INSTALL_TEST_LIB),$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/lib/oatpp-$(PKG_VERSION)/liboatpp-test.$(OATPP_BUILD_TYPE) $(1)/usr/lib/oatpp-$(PKG_VERSION)/)
 	$(if $(CONFIG_OATPP_INSTALL_TEST_LIB),$(if $(CONFIG_OATPP_SYMLINK_LIB),$(LN) liboatpp-test.$(OATPP_BUILD_TYPE).$(PKG_VERSION) $(1)/usr/lib/oatpp-$(PKG_VERSION)/liboatpp-test.$(OATPP_BUILD_TYPE)))
-	
+	$(if $(CONFIG_OATPP_INSTALL_TEST_LIB),$(if $(CONFIG_OATPP_SYMLINK_LIB),$(LN) liboatpp-test.$(OATPP_BUILD_TYPE) $(1)/usr/lib/oatpp-$(PKG_VERSION)/liboatpp-test.$(OATPP_BUILD_TYPE)))
+
 	$(if $(CONFIG_OATPP_INSTALL_TEST_BIN),$(INSTALL_DIR) $(1)/usr/bin)
 	$(if $(CONFIG_OATPP_INSTALL_TEST_BIN),$(INSTALL_BIN) $(PKG_BUILD_DIR)/test/oatppAllTests $(1)/usr/bin/)
 endef

@@ -74,6 +74,7 @@ define Package/oatpp-websocket/install
 	$(INSTALL_DIR) $(1)/usr/lib/oatpp-$(PKG_VERSION)/
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/lib/oatpp-$(PKG_VERSION)/liboatpp-websocket.$(OATPP_BUILD_TYPE) $(1)/usr/lib/oatpp-$(PKG_VERSION)/
 	$(if $(CONFIG_OATPP_SYMLINK_LIB),$(LN) oatpp-$(PKG_VERSION)/liboatpp-websocket.$(OATPP_BUILD_TYPE) $(1)/usr/lib/liboatpp-websocket.$(OATPP_BUILD_TYPE).$(PKG_VERSION))
+	$(if $(CONFIG_OATPP_SYMLINK_LIB),$(LN) oatpp-$(PKG_VERSION)/liboatpp-websocket.$(OATPP_BUILD_TYPE) $(1)/usr/lib/liboatpp-websocket.$(OATPP_BUILD_TYPE))
 
 	$(if $(CONFIG_OATPP_WEBSOCKET_INSTALL_TEST_BIN),$(INSTALL_DIR) $(1)/usr/bin)
 	$(if $(CONFIG_OATPP_WEBSOCKET_INSTALL_TEST_BIN),$(INSTALL_BIN) $(PKG_BUILD_DIR)/test/module-tests $(1)/usr/bin/oatppWebsocketTest)
