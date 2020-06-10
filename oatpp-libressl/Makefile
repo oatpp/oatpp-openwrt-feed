@@ -25,7 +25,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=oatpp-libressl
 PKG_VERSION:=1.1.0
-PKG_RELEASE:=2
+PKG_RELEASE:=3
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
 PKG_SOURCE_PROTO:=git
@@ -51,7 +51,7 @@ endef
 define Package/oatpp-libressl
 	$(call Package/oatpp-libressl/Default)
 	TITLE:=Oat++-libressl
-	DEFAULT:=m
+	DEFAULT:=n
 	DEPENDS:=+oatpp +libressl
 endef
 
